@@ -1,7 +1,49 @@
 <!DOCTYPE html>
 <html>
 <body>
-This is a website for reference using ODEINT and Matplotlib for computational physics
+<h1>DRACENTIS's Computational Physics Python Reference Guide</h1>
+This is a website for reference when using odeint and Matplotlib for computational physics.
+It is searchable on google under the name 'dracentis.github.io'
+<h3>List of Useful imports:</h3>
+<pre style='color:#000000;background:#ffffff;'><span style='color:#800000; font-weight:bold; '>import</span> numpy <span style='color:#800000; font-weight:bold; '>as</span> np
+<span style='color:#800000; font-weight:bold; '>from</span> scipy<span style='color:#808030; '>.</span>integrate <span style='color:#800000; font-weight:bold; '>import</span> odeint
+<span style='color:#800000; font-weight:bold; '>import</span> matplotlib<span style='color:#808030; '>.</span>pyplot <span style='color:#800000; font-weight:bold; '>as</span> plt
+<span style='color:#44aadd; '>%</span>matplotlib inline
+</pre>
+<h3>Example use of odeint:</h3>
+Odeint allows you to solve differential equations in python.
+<p>For example, if we have a system of variables X, Y, and Z with time derivatives:</p>
+<p><img src="http://latex.codecogs.com/gif.latex?\frac{dX}{dt}=Y+at" border="0"/></p>
+<p><img src="http://latex.codecogs.com/gif.latex?\frac{dY}{dt}=Z" border="0"/></p>
+<p><img src="http://latex.codecogs.com/gif.latex?\frac{dZ}{dt}=b" border="0"/></p>
+<p>where a and b are parameters for the derivatives.</p>
+<p>We can use the following model to solve the equations:</p>
+<pre style='color:#000000;background:#ffffff;'><span style='color:#800000; font-weight:bold; '>def</span> derivatives<span style='color:#808030; '>(</span>state<span style='color:#808030; '>,</span> time<span style='color:#808030; '>,</span> a<span style='color:#808030; '>,</span> b<span style='color:#808030; '>)</span><span style='color:#808030; '>:</span> <span style='color:#696969; '># Put the parameters here</span>
+    
+    X <span style='color:#808030; '>=</span> current_state<span style='color:#808030; '>[</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>]</span>
+    Y <span style='color:#808030; '>=</span> current_state<span style='color:#808030; '>[</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>]</span>
+    Z <span style='color:#808030; '>=</span> current_state<span style='color:#808030; '>[</span><span style='color:#008c00; '>2</span><span style='color:#808030; '>]</span>
+    
+    dXdt <span style='color:#808030; '>=</span> Y <span style='color:#44aadd; '>+</span> a <span style='color:#44aadd; '>*</span> t <span style='color:#696969; '># Set the derivative equations here</span>
+    dYdt <span style='color:#808030; '>=</span> Z
+    dZdt <span style='color:#808030; '>=</span> b
+    
+    <span style='color:#800000; font-weight:bold; '>return</span> <span style='color:#808030; '>[</span>dXdt<span style='color:#808030; '>,</span> dYdt<span style='color:#808030; '>,</span> dZdt<span style='color:#808030; '>]</span>
+
+a <span style='color:#808030; '>=</span> <span style='color:#008000; '>0.5</span> <span style='color:#696969; '># Set the values of your parameters here</span>
+b <span style='color:#808030; '>=</span> <span style='color:#008c00; '>4</span><span style='color:#44aadd; '>/</span><span style='color:#008c00; '>3</span>
+
+init <span style='color:#808030; '>=</span> <span style='color:#808030; '>[</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>,</span><span style='color:#008000; '>.1</span><span style='color:#808030; '>]</span> <span style='color:#696969; '># Set the initial conditions here</span>
+time <span style='color:#808030; '>=</span> np<span style='color:#808030; '>.</span>linspace<span style='color:#808030; '>(</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>50</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>500</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># Set the time that you plan on integrating across</span>
+<span style='color:#696969; '># For this example we will run from 0 to 50 with 500 intervals</span>
+
+solution <span style='color:#808030; '>=</span> odeint<span style='color:#808030; '>(</span>derivatives<span style='color:#808030; '>,</span> init<span style='color:#808030; '>,</span> time<span style='color:#808030; '>,</span> args<span style='color:#808030; '>=</span><span style='color:#808030; '>(</span>a<span style='color:#808030; '>,</span> b<span style='color:#808030; '>)</span><span style='color:#808030; '>)</span><span style='color:#696969; '># Call odeint with the initial condition and parameters</span>
+
+X <span style='color:#808030; '>=</span> result<span style='color:#808030; '>[</span><span style='color:#808030; '>:</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>]</span>
+Y <span style='color:#808030; '>=</span> result<span style='color:#808030; '>[</span><span style='color:#808030; '>:</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>]</span>
+Z <span style='color:#808030; '>=</span> result<span style='color:#808030; '>[</span><span style='color:#808030; '>:</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>2</span><span style='color:#808030; '>]</span>
+</pre>
+<h3>Example use of matplotlib:</h3>
 
 </body>
 </html>
