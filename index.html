@@ -20,11 +20,11 @@ Odeint allows you to solve differential equations in python.
 <p>We can use the following model to solve the equations:</p>
 <pre style='color:#000000;background:#f0f0f0;'><span style='color:#800000; font-weight:bold; '>def</span> derivatives<span style='color:#808030; '>(</span>state<span style='color:#808030; '>,</span> time<span style='color:#808030; '>,</span> a<span style='color:#808030; '>,</span> b<span style='color:#808030; '>)</span><span style='color:#808030; '>:</span> <span style='color:#696969; '># Put the parameters here</span>
     
-    X <span style='color:#808030; '>=</span> current_state<span style='color:#808030; '>[</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>]</span>
-    Y <span style='color:#808030; '>=</span> current_state<span style='color:#808030; '>[</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>]</span>
-    Z <span style='color:#808030; '>=</span> current_state<span style='color:#808030; '>[</span><span style='color:#008c00; '>2</span><span style='color:#808030; '>]</span>
+    X <span style='color:#808030; '>=</span> state<span style='color:#808030; '>[</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>]</span>
+    Y <span style='color:#808030; '>=</span> state<span style='color:#808030; '>[</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>]</span>
+    Z <span style='color:#808030; '>=</span> state<span style='color:#808030; '>[</span><span style='color:#008c00; '>2</span><span style='color:#808030; '>]</span>
     
-    dXdt <span style='color:#808030; '>=</span> Y <span style='color:#44aadd; '>+</span> a <span style='color:#44aadd; '>*</span> t <span style='color:#696969; '># Set the derivative equations here</span>
+    dXdt <span style='color:#808030; '>=</span> Y <span style='color:#44aadd; '>+</span> a <span style='color:#44aadd; '>*</span> time <span style='color:#696969; '># Set the derivative equations here</span>
     dYdt <span style='color:#808030; '>=</span> Z
     dZdt <span style='color:#808030; '>=</span> b
     
@@ -33,16 +33,17 @@ Odeint allows you to solve differential equations in python.
 a <span style='color:#808030; '>=</span> <span style='color:#008000; '>0.5</span> <span style='color:#696969; '># Set the values of your parameters here</span>
 b <span style='color:#808030; '>=</span> <span style='color:#008c00; '>4</span><span style='color:#44aadd; '>/</span><span style='color:#008c00; '>3</span>
 
-init <span style='color:#808030; '>=</span> <span style='color:#808030; '>[</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>,</span><span style='color:#008000; '>.1</span><span style='color:#808030; '>]</span> <span style='color:#696969; '># Set the initial conditions here</span>
+init <span style='color:#808030; '>=</span> <span style='color:#808030; '>[</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>,</span><span style='color:#008000; '>.1</span><span style='color:#808030; '>,</span> <span style='color:#008c00; '>2</span><span style='color:#808030; '>]</span> <span style='color:#696969; '># Set the initial conditions here</span>
 time <span style='color:#808030; '>=</span> np<span style='color:#808030; '>.</span>linspace<span style='color:#808030; '>(</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>50</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>500</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># Set the time that you plan on integrating across</span>
 <span style='color:#696969; '># For this example we will run from 0 to 50 with 500 intervals</span>
 
 solution <span style='color:#808030; '>=</span> odeint<span style='color:#808030; '>(</span>derivatives<span style='color:#808030; '>,</span> init<span style='color:#808030; '>,</span> time<span style='color:#808030; '>,</span> args<span style='color:#808030; '>=</span><span style='color:#808030; '>(</span>a<span style='color:#808030; '>,</span> b<span style='color:#808030; '>)</span><span style='color:#808030; '>)</span><span style='color:#696969; '># Call odeint with the initial condition and parameters</span>
 
-X <span style='color:#808030; '>=</span> result<span style='color:#808030; '>[</span><span style='color:#808030; '>:</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>]</span>
-Y <span style='color:#808030; '>=</span> result<span style='color:#808030; '>[</span><span style='color:#808030; '>:</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>]</span>
-Z <span style='color:#808030; '>=</span> result<span style='color:#808030; '>[</span><span style='color:#808030; '>:</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>2</span><span style='color:#808030; '>]</span>
+X <span style='color:#808030; '>=</span> solution<span style='color:#808030; '>[</span><span style='color:#808030; '>:</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>]</span>
+Y <span style='color:#808030; '>=</span> solution<span style='color:#808030; '>[</span><span style='color:#808030; '>:</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>]</span>
+Z <span style='color:#808030; '>=</span> solution<span style='color:#808030; '>[</span><span style='color:#808030; '>:</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>2</span><span style='color:#808030; '>]</span>
 </pre>
+<!--Created using ToHtml.com on 2019-10-14 21:35:49 UTC -->
 <h3>Example use of matplotlib:</h3>
 <pre style='color:#000000;background:#f0f0f0;'>plt<span style='color:#808030; '>.</span>figure<span style='color:#808030; '>(</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>,</span> figsize<span style='color:#808030; '>=</span><span style='color:#808030; '>(</span><span style='color:#008c00; '>12</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>7</span><span style='color:#808030; '>)</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># creates and sets the current figure with figure number 1</span>
 <span style='color:#696969; '># change this '1' to a different number if you need more than one figure</span>
@@ -59,9 +60,12 @@ plt<span style='color:#808030; '>.</span>xlabel<span style='color:#808030; '>(</
 plt<span style='color:#808030; '>.</span>ylabel<span style='color:#808030; '>(</span><span style='color:#0000e6; '>'Calculated Values'</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># creates a label for the </span>
 plt<span style='color:#808030; '>.</span>title<span style='color:#808030; '>(</span><span style='color:#0000e6; '>'Example Title'</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># adds a title for the whole plot</span>
 
-plt<span style='color:#808030; '>.</span>tight_layout<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># prevents the title from overlapping</span>
+plt<span style='color:#808030; '>.</span>tight_layout<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># prevents the titles from overlapping</span>
 plt<span style='color:#808030; '>.</span>savefig<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"Example.png"</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># saves the figure as an image</span>
 </pre>
-<img src="subplots.png" width="500" height="333">
+<h5>Output:</h5>
+<img src="Example.png" width="500" height="300">
+<h5>Diagram of plt.subplot():</h5>
+<img src="subplots.png" width="500" height="300">
 </body>
 </html>
