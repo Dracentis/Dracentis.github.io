@@ -5,7 +5,7 @@
 This is a website for reference when using odeint and Matplotlib for computational physics.
 It is searchable on google under the name 'dracentis.github.io'
 <h3>List of Useful imports:</h3>
-<pre style='color:#000000;background:#ffffff;'><span style='color:#800000; font-weight:bold; '>import</span> numpy <span style='color:#800000; font-weight:bold; '>as</span> np
+<pre style='color:#000000;background:#f0f0f0;'><span style='color:#800000; font-weight:bold; '>import</span> numpy <span style='color:#800000; font-weight:bold; '>as</span> np
 <span style='color:#800000; font-weight:bold; '>from</span> scipy<span style='color:#808030; '>.</span>integrate <span style='color:#800000; font-weight:bold; '>import</span> odeint
 <span style='color:#800000; font-weight:bold; '>import</span> matplotlib<span style='color:#808030; '>.</span>pyplot <span style='color:#800000; font-weight:bold; '>as</span> plt
 <span style='color:#44aadd; '>%</span>matplotlib inline
@@ -18,7 +18,7 @@ Odeint allows you to solve differential equations in python.
 <p><img src="http://latex.codecogs.com/gif.latex?\frac{dZ}{dt}=b" border="0"/></p>
 <p>where a and b are parameters for the derivatives.</p>
 <p>We can use the following model to solve the equations:</p>
-<pre style='color:#000000;background:#ffffff;'><span style='color:#800000; font-weight:bold; '>def</span> derivatives<span style='color:#808030; '>(</span>state<span style='color:#808030; '>,</span> time<span style='color:#808030; '>,</span> a<span style='color:#808030; '>,</span> b<span style='color:#808030; '>)</span><span style='color:#808030; '>:</span> <span style='color:#696969; '># Put the parameters here</span>
+<pre style='color:#000000;background:#f0f0f0;'><span style='color:#800000; font-weight:bold; '>def</span> derivatives<span style='color:#808030; '>(</span>state<span style='color:#808030; '>,</span> time<span style='color:#808030; '>,</span> a<span style='color:#808030; '>,</span> b<span style='color:#808030; '>)</span><span style='color:#808030; '>:</span> <span style='color:#696969; '># Put the parameters here</span>
     
     X <span style='color:#808030; '>=</span> current_state<span style='color:#808030; '>[</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>]</span>
     Y <span style='color:#808030; '>=</span> current_state<span style='color:#808030; '>[</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>]</span>
@@ -44,6 +44,24 @@ Y <span style='color:#808030; '>=</span> result<span style='color:#808030; '>[</
 Z <span style='color:#808030; '>=</span> result<span style='color:#808030; '>[</span><span style='color:#808030; '>:</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>2</span><span style='color:#808030; '>]</span>
 </pre>
 <h3>Example use of matplotlib:</h3>
+<pre style='color:#000000;background:#f0f0f0;'>plt<span style='color:#808030; '>.</span>figure<span style='color:#808030; '>(</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>,</span> figsize<span style='color:#808030; '>=</span><span style='color:#808030; '>(</span><span style='color:#008c00; '>12</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>7</span><span style='color:#808030; '>)</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># creates and sets the current figure with figure number 1</span>
+<span style='color:#696969; '># change this '1' to a different number if you need more than one figure</span>
 
+plt<span style='color:#808030; '>.</span>subplot<span style='color:#808030; '>(</span><span style='color:#008c00; '>224</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># selects the fourth plot in a 2 by 2 grid of subplots</span>
+<span style='color:#696969; '># this line is unnecessary if you only need to display one plot</span>
+
+plt<span style='color:#808030; '>.</span>plot<span style='color:#808030; '>(</span>time<span style='color:#808030; '>,</span> X<span style='color:#808030; '>,</span> label<span style='color:#808030; '>=</span><span style='color:#0000e6; '>'x-values'</span><span style='color:#808030; '>)</span>
+plt<span style='color:#808030; '>.</span>plot<span style='color:#808030; '>(</span>time<span style='color:#808030; '>,</span> Y<span style='color:#808030; '>,</span> label<span style='color:#808030; '>=</span><span style='color:#0000e6; '>'y-values'</span><span style='color:#808030; '>)</span>
+plt<span style='color:#808030; '>.</span>plot<span style='color:#808030; '>(</span>time<span style='color:#808030; '>,</span> Z<span style='color:#808030; '>,</span> label<span style='color:#808030; '>=</span><span style='color:#0000e6; '>'z-values'</span><span style='color:#808030; '>)</span>
+plt<span style='color:#808030; '>.</span>grid<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># enables the grid</span>
+plt<span style='color:#808030; '>.</span>legend<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># enables the legend</span>
+plt<span style='color:#808030; '>.</span>xlabel<span style='color:#808030; '>(</span><span style='color:#0000e6; '>'Time'</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># creates a label for the x axis</span>
+plt<span style='color:#808030; '>.</span>ylabel<span style='color:#808030; '>(</span><span style='color:#0000e6; '>'Calculated Values'</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># creates a label for the </span>
+plt<span style='color:#808030; '>.</span>title<span style='color:#808030; '>(</span><span style='color:#0000e6; '>'Example Title'</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># adds a title for the whole plot</span>
+
+plt<span style='color:#808030; '>.</span>tight_layout<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># prevents the title from overlapping</span>
+plt<span style='color:#808030; '>.</span>savefig<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"Example.png"</span><span style='color:#808030; '>)</span> <span style='color:#696969; '># saves the figure as an image</span>
+</pre>
+<img src="subplots.png" width="500" height="333">
 </body>
 </html>
