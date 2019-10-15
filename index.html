@@ -10,6 +10,10 @@ It is searchable on google under the name 'dracentis.github.io'
 <span style='color:#800000; font-weight:bold; '>import</span> matplotlib<span style='color:#808030; '>.</span>pyplot <span style='color:#800000; font-weight:bold; '>as</span> plt
 <span style='color:#44aadd; '>%</span>matplotlib inline
 </pre>
+<h3>Example use of numpy to load data in comma seperated formate:</h3>
+<pre style='color:#000000;background:#f0f0f0;'>column1<span style='color:#808030; '>,</span> column2 <span style='color:#808030; '>=</span> np<span style='color:#808030; '>.</span>loadtxt<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"data.csv"</span><span style='color:#808030; '>,</span> usecols <span style='color:#808030; '>=</span> <span style='color:#808030; '>(</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>)</span><span style='color:#808030; '>,</span> unpack<span style='color:#808030; '>=</span><span style='color:#074726; '>True</span><span style='color:#808030; '>,</span> skiprows <span style='color:#808030; '>=</span> <span style='color:#008c00; '>1</span><span style='color:#808030; '>,</span> delimiter<span style='color:#808030; '>=</span><span style='color:#0000e6; '>','</span><span style='color:#808030; '>)</span>
+</pre>
+<!--Created using ToHtml.com on 2019-10-15 14:57:46 UTC -->
 <h3>Example use of odeint:</h3>
 Odeint allows you to solve differential equations in python.
 <p>For example, if we have a system of variables X, Y, and Z with time derivatives:</p>
