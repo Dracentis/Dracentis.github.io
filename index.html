@@ -47,6 +47,25 @@ data_frame<span style='color:#808030; '>.</span>plot<span style='color:#808030; 
 data_frame<span style='color:#808030; '>.</span>boxplot<span style='color:#808030; '>(</span>column <span style='color:#808030; '>=</span> <span style='color:#808030; '>[</span><span style='color:#0000e6; '>'col1'</span><span style='color:#808030; '>,</span><span style='color:#0000e6; '>'col2'</span><span style='color:#808030; '>]</span><span style='color:#808030; '>)</span>
 </pre>
 
+<h3>Various Seaborn functions:</h3>
+<pre style='color:#000000;background:#f0f0f0;'>sns<span style='color:#808030; '>.</span><span style='color:#400000; '>set</span><span style='color:#808030; '>(</span><span style='color:#808030; '>)</span> <span style='color:#696969; '>#Sets styling to seaborn</span>
+sns<span style='color:#808030; '>.</span>reset_orig<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span> <span style='color:#696969; '>#Returns styling to default</span>
+
+sns<span style='color:#808030; '>.</span>despine<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span> <span style='color:#696969; '>#Removes borders</span>
+
+<span style='color:#696969; '>#List of various styles:</span>
+sns<span style='color:#808030; '>.</span>set_style<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"ticks"</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '>#List of various contexts:</span>
+sns<span style='color:#808030; '>.</span>set_context<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"paper"</span><span style='color:#808030; '>)</span>
+sns<span style='color:#808030; '>.</span>set_context<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"talk"</span><span style='color:#808030; '>)</span>
+sns<span style='color:#808030; '>.</span>set_context<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"poster"</span><span style='color:#808030; '>)</span>
+sns<span style='color:#808030; '>.</span>set_context<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"notebook"</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '>#Jointplot scatter</span>
+sns<span style='color:#808030; '>.</span>jointplot<span style='color:#808030; '>(</span>data_frame<span style='color:#808030; '>[</span><span style='color:#0000e6; '>'col1'</span><span style='color:#808030; '>]</span><span style='color:#808030; '>,</span> data_frame<span style='color:#808030; '>[</span><span style='color:#0000e6; '>'col2'</span><span style='color:#808030; '>]</span><span style='color:#808030; '>,</span> kind<span style='color:#808030; '>=</span><span style='color:#0000e6; '>"reg"</span><span style='color:#808030; '>)</span>
+</pre>
+
 <h3>Example use of odeint:</h3>
 Odeint allows you to solve differential equations in python.
 <p>For example, if we have a system of variables X, Y, and Z with time derivatives:</p>
