@@ -12,11 +12,41 @@ This is a website for reference when using odeint and Matplotlib for computation
 <span style='color:#800000; font-weight:bold; '>from</span> scipy<span style='color:#808030; '>.</span>integrate <span style='color:#800000; font-weight:bold; '>import</span> odeint
 <span style='color:#800000; font-weight:bold; '>import</span> matplotlib<span style='color:#808030; '>.</span>pyplot <span style='color:#800000; font-weight:bold; '>as</span> plt
 <span style='color:#44aadd; '>%</span>matplotlib inline
+<span style='color:#800000; font-weight:bold; '>import</span> pandas <span style='color:#800000; font-weight:bold; '>as</span> pd
+<span style='color:#800000; font-weight:bold; '>import</span> seaborn <span style='color:#800000; font-weight:bold; '>as</span> sns
+<span style='color:#800000; font-weight:bold; '>import</span> random
+<span style='color:#800000; font-weight:bold; '>from</span> scipy<span style='color:#808030; '>.</span>optimize <span style='color:#800000; font-weight:bold; '>import</span> curve_fit
 </pre>
-<h3>Example use of numpy to load data in comma seperated formate:</h3>
-<pre style='color:#000000;background:#f0f0f0;'>column1<span style='color:#808030; '>,</span> column2 <span style='color:#808030; '>=</span> np<span style='color:#808030; '>.</span>loadtxt<span style='color:#808030; '>(</span><span style='color:#0000e6; '>"data.csv"</span><span style='color:#808030; '>,</span> usecols <span style='color:#808030; '>=</span> <span style='color:#808030; '>(</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>)</span><span style='color:#808030; '>,</span> unpack<span style='color:#808030; '>=</span><span style='color:#074726; '>True</span><span style='color:#808030; '>,</span> skiprows <span style='color:#808030; '>=</span> <span style='color:#008c00; '>1</span><span style='color:#808030; '>,</span> delimiter<span style='color:#808030; '>=</span><span style='color:#0000e6; '>','</span><span style='color:#808030; '>)</span>
+<h3>Example use of numpy to load data in comma seperated format:</h3>
+<pre style='color:#000000;background:#f0f0f0;'>column1<span style='color:#808030; '>,</span> column2 <span style='color:#808030; '>=</span> np<span style='color:#808030; '>.</span>loadtxt<span style='color:#808030; '>(</span><span style='color:#0000e6; '>'data.csv'</span><span style='color:#808030; '>,</span> usecols <span style='color:#808030; '>=</span> <span style='color:#808030; '>(</span><span style='color:#008c00; '>0</span><span style='color:#808030; '>,</span><span style='color:#008c00; '>1</span><span style='color:#808030; '>)</span><span style='color:#808030; '>,</span> unpack<span style='color:#808030; '>=</span><span style='color:#074726; '>True</span><span style='color:#808030; '>,</span> skiprows <span style='color:#808030; '>=</span> <span style='color:#008c00; '>1</span><span style='color:#808030; '>,</span> delimiter<span style='color:#808030; '>=</span><span style='color:#0000e6; '>','</span><span style='color:#808030; '>)</span>
 </pre>
-<!--Created using ToHtml.com on 2019-10-15 14:57:46 UTC -->
+<h3>Example use of pandas to load data in comma seperated format:</h3>
+<pre style='color:#000000;background:#f0f0f0;'>data_frame <span style='color:#808030; '>=</span> pd<span style='color:#808030; '>.</span>read_csv<span style='color:#808030; '>(</span><span style='color:#0000e6; '>'data.csv'</span><span style='color:#808030; '>,</span>encoding<span style='color:#808030; '>=</span><span style='color:#0000e6; '>'ISO-8859-1'</span><span style='color:#808030; '>)</span>
+</pre>
+
+<h3>Various Pandas functions:</h3>
+<pre style='color:#000000;background:#f0f0f0;'><span style='color:#696969; '>#displays the top part of the dataframe</span>
+data_frame<span style='color:#808030; '>.</span>head<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '>#displays the bottom part of the dataframe</span>
+data_frame<span style='color:#808030; '>.</span>tail<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '>#displays various stats about the data frame</span>
+data_frame<span style='color:#808030; '>.</span>describe<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '>#a list of columns in the dataframe</span>
+data_frame<span style='color:#808030; '>.</span>columns
+
+<span style='color:#696969; '>#produces a histogram of a column</span>
+data_frame<span style='color:#808030; '>[</span><span style='color:#0000e6; '>'col1'</span><span style='color:#808030; '>]</span><span style='color:#808030; '>.</span>plot<span style='color:#808030; '>.</span>hist<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '>#produces a scatter plot of two columns</span>
+data_frame<span style='color:#808030; '>.</span>plot<span style='color:#808030; '>.</span>scatter<span style='color:#808030; '>(</span>x<span style='color:#808030; '>=</span><span style='color:#0000e6; '>'col2'</span><span style='color:#808030; '>,</span>y<span style='color:#808030; '>=</span><span style='color:#0000e6; '>'col1'</span><span style='color:#808030; '>)</span>
+
+<span style='color:#696969; '>#produces a boxplot of two columns</span>
+data_frame<span style='color:#808030; '>.</span>boxplot<span style='color:#808030; '>(</span>column <span style='color:#808030; '>=</span> <span style='color:#808030; '>[</span><span style='color:#0000e6; '>'col1'</span><span style='color:#808030; '>,</span><span style='color:#0000e6; '>'col2'</span><span style='color:#808030; '>]</span><span style='color:#808030; '>)</span>
+</pre>
+
 <h3>Example use of odeint:</h3>
 Odeint allows you to solve differential equations in python.
 <p>For example, if we have a system of variables X, Y, and Z with time derivatives:</p>
@@ -74,5 +104,16 @@ plt<span style='color:#808030; '>.</span>savefig<span style='color:#808030; '>(<
 <img src="Example.png" width="500" height="300">
 <h5>Diagram of plt.subplot():</h5>
 <img src="subplots.png" width="500" height="300">
+
+<h3>Example use of matshow</h3>
+<pre style='color:#000000;background:#f0f0f0;'>heatmap <span style='color:#808030; '>=</span> <span style='color:#808030; '>[</span><span style='color:#808030; '>]</span>
+<span style='color:#800000; font-weight:bold; '>for</span> i in range<span style='color:#808030; '>(</span><span style='color:#008c00; '>100</span><span style='color:#808030; '>)</span><span style='color:#808030; '>:</span>
+    heatmap<span style='color:#808030; '>.</span>append<span style='color:#808030; '>(</span><span style='color:#808030; '>[</span><span style='color:#808030; '>]</span><span style='color:#808030; '>)</span>
+    <span style='color:#800000; font-weight:bold; '>for</span> j in range<span style='color:#808030; '>(</span><span style='color:#008c00; '>100</span><span style='color:#808030; '>)</span><span style='color:#808030; '>:</span>
+        heatmap<span style='color:#808030; '>[</span>i<span style='color:#808030; '>]</span><span style='color:#808030; '>.</span>append<span style='color:#808030; '>(</span>i<span style='color:#797997; '>*j</span><span style='color:#808030; '>)</span>
+
+plt<span style='color:#808030; '>.</span>matshow<span style='color:#808030; '>(</span>heatmap<span style='color:#808030; '>)</span>
+</pre>
+
 </body>
 </html>
