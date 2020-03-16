@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MTH 254H</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #005001;
+}
+
+.video-responsive{
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+}
+.video-responsive iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+}
+
+.button {
+  display: block;
+  width: 200px;
+  background-color: #3498db;
+  border: none;color: white;
+  padding: 10px 30px;
+  text-decoration: none;
+  text-align: center;
+  font-size: 25px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.button-on {background-color: #3498db;}
+
+.button-on:active {background-color: #2980b9;}
+
+/* Create two equal columns that floats next to each other */
+.pad1 {
+  float: left;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Create two equal columns that floats next to each other */
+.column1 {
+  float: left;
+  width: 85%;
+  padding: 20px;
+}
+
+/* Creates a responsive image thingy */
+.responsive {
+  width: 85%;
+  height: auto;
+}
+
+/* Side padding */
+.pad2 {
+  float: left;
+  width: 5%;
+  padding:1px;
+}
+
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column1 {
+    width: 100%;
+  }
+}
+
+
+</style>
+</head>
+<body>
+<div class="pad1">
+  <font color="white">
+    <h1>MTH 254H Lecture Recordings</h1>
+    This website archives online lectures from MTH 254H.
+  </font>
+</div>
+
+<div class="pad1">
+  </div>
+<div class="row">
+  <div class="pad2">
+  </div>
+  <div class="column1" style="background-color:#fafafa;">
+    <h3>Lecture 3/16/2020</h3>
+    <div class="video-responsive">
+       <iframe src="https://www.youtube.com/embed/vWq2QPGDUEU" width="1280" height="720" frameborder="0" allowfullscreen></iframe>
+	</div>
+  </div>
+  <div class="pad2">
+  </div>
+</div>
+
+</body>
+</html>
