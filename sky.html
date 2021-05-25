@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <style>
+        body {
+            background-color: black;
+            color:red;
+        }
+
+        #panorama {
+            width: 700px;
+            height: 700px;
+        }
+
+        .custom-hotspot {
+            height: auto;
+            width: auto;
+            background: black;
+            color: red;
+        }
+
+        #controls {
+            position: absolute;
+            bottom: 0;
+            z-index: 2;
+            text-align: center;
+            color: red;
+            width: 100%;
+            padding-bottom: 3px;
+        }
+
+        .ctrl {
+            padding: 8px 5px;
+            width: 30px;
+            text-align: center;
+            background: rgba(20, 0, 0, 0.8);
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .ctrl:hover {
+            background: rgba(100, 0, 0, 1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <button class="btn btn-default btn-lg" id="getLocation"><i class="fa fa-location-arrow fa-fw"></i> Get My
+        Location and Generate Sky Map</button>
+    <div id="panorama">
+        <div id="controls">
+            <div class="ctrl" id="zoom-in">&plus;</div>
+            <div class="ctrl" id="zoom-out">&minus;</div>
+            <div class="ctrl" id="fullscreen">&#x2922;</div>
+        </div>
+    </div>
+    <div id="data"></div>
+
+    <script>
+        var lat = 43, lon = -84;
+        var offset = -81.34005; // initial rotation of the earth
+        var theta = 0;
+        var phi = 0;
+
+        var skyRoll = 0;
+        var skyPitch = 0;
+        var skyYaw = 0;
+
+        document.getElementById('getLocation').addEventListener('mousedown', getLocation, false);
+
+        function labelYaw(pitch, yaw) {
+            return pitch + (skyPitch * Math.cos(toRadians(yaw)));
+        }
+
+        function labelPitch(pitch, yaw) {
+            return 0;
+        }
+
+        function init() {
+            viewer = pannellum.viewer('panorama', {
+                "type": "equirectangular",
+                "panorama": "https://dracentis.github.io/images/skymap.jpg",
+                "preview" : "https://dracentis.github.io/images/skymap.jpg",
+                "backgroundColor " : [0, 0, 0],
+                "autoLoad": true,
+                "showControls": false,
+                "compass": false,
+                "northOffset": skyYaw,
+                "pitch": 45,
+                "yaw": skyYaw,
+                "hfov": 120,
+                "horizonPitch": skyPitch,
+                "horizonRoll": skyRoll,
+                "hotSpots": [
+                    {
+                        "pitch": 0,
+                        "yaw": 0 + skyYaw,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": hotspot,
+                        "createTooltipArgs": "N",
+                    },
+                    {
+                        "pitch": 0,
+                        "yaw": 90 + skyYaw,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": hotspot,
+                        "createTooltipArgs": "E",
+                    },
+                    {
+                        "pitch": 0,
+                        "yaw": 180 + skyYaw,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": hotspot,
+                        "createTooltipArgs": "S",
+                    },
+                    {
+                        "pitch": 0,
+                        "yaw": -90 + skyYaw,
+                        "cssClass": "custom-hotspot",
+                        "createTooltipFunc": hotspot,
+                        "createTooltipArgs": "W",
+                    }
+                ]
+            });
+
+            document.getElementById('zoom-in').addEventListener('click', function (e) {
+                viewer.setHfov(viewer.getHfov() - 10);
+            });
+            document.getElementById('zoom-out').addEventListener('click', function (e) {
+                viewer.setHfov(viewer.getHfov() + 10);
+            });
+            document.getElementById('fullscreen').addEventListener('click', function (e) {
+                viewer.toggleFullscreen();
+            });
+        }
+
+        function toRadians(angle) {
+            return (angle % 360) * (Math.PI / 180);
+        }
+
+        function toDegrees(angle) {
+            return (angle * (180 / Math.PI)) % 360;
+        }
+
+        // Runs when "Get My Location" button pressed
+        function getLocation() {
+            navigator.geolocation.getCurrentPosition(setPosition);
+        }
+
+        // Updates the rotation of the sky
+        function setPosition(position) {
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+            theta = -(getEarthAngle() + offset + lon);
+            phi = lat - 90;
+
+            var rolls = [];
+            rolls.push(toDegrees(Math.asin(-Math.sin(toRadians(theta)) * Math.sin(toRadians(phi)))));
+            rolls.push((180 - rolls[0]) % 360);
+            var pitches = [];
+            pitches.push(toDegrees(Math.asin((Math.sin(toRadians(phi)) * Math.cos(toRadians(theta))) / Math.cos(toRadians(rolls[0])))));
+            pitches.push((180 - pitches[0]) % 360);
+            pitches.push(toDegrees(Math.asin((Math.sin(toRadians(phi)) * Math.cos(toRadians(theta))) / Math.cos(toRadians(rolls[1])))));
+            pitches.push((180 - pitches[2]) % 360);
+            var yaws = [];
+            yaws.push(toDegrees(Math.acos(Math.cos(toRadians(theta)) / Math.cos(toRadians(rolls[0])))));
+            yaws.push((360 - yaws[0]) % 360);
+            yaws.push(toDegrees(Math.acos(Math.cos(toRadians(theta)) / Math.cos(toRadians(rolls[1])))));
+            yaws.push((360 - yaws[2]) % 360);
+            for (i = 0; i < rolls.length; i++) {
+                for (j = 0; j < pitches.length; j++) {
+                    for (k = 0; k < yaws.length; k++) {
+                        if (checkRotate(rolls[i], pitches[j], yaws[k])) {
+                            skyRoll = rolls[i];
+                            skyPitch = pitches[j];
+                            skyYaw = yaws[k];
+                            i = 2;
+                            j = 4;
+                            k = 4;
+                        }
+                    }
+                }
+            }
+            document.getElementById('getLocation').remove();
+            document.getElementById('data').innerHTML = "Theta:" + theta + ", Phi:" + phi + "<br> Pitch:" + skyPitch + ", Roll:" + skyRoll + ", Yaw:" + skyYaw;
+            init();
+        }
+
+        function checkRotate(roll, pitch, yaw) {
+            if (Math.abs(-Math.sin(toRadians(roll)) - Math.sin(toRadians(theta)) * Math.sin(toRadians(phi))) > 0.01) {
+                return false;
+            }
+            if (Math.abs(Math.cos(toRadians(roll)) * Math.cos(toRadians(pitch)) - Math.cos(toRadians(phi))) > 0.01) {
+                return false;
+            }
+            if (Math.abs(Math.cos(toRadians(yaw)) * Math.cos(toRadians(roll)) - Math.cos(toRadians(theta))) > 0.01) {
+                return false;
+            }
+            if (Math.abs(Math.sin(toRadians(yaw)) * Math.cos(toRadians(roll)) - Math.cos(toRadians(phi)) * Math.sin(toRadians(theta))) > 0.01) {
+                return false;
+            }
+            if (Math.abs(Math.cos(toRadians(roll)) * Math.sin(toRadians(pitch)) - Math.sin(toRadians(phi)) * Math.cos(toRadians(theta))) > 0.01) {
+                return false;
+            }
+            return true;
+        }
+
+        // Hot spot creation function
+        function hotspot(hotSpotDiv, args) {
+            hotSpotDiv.classList.add('custom-tooltip');
+            hotSpotDiv.innerHTML = args;
+        }
+
+        function getEarthAngle() {
+            var sysTime = new Date();
+            var utcTime = sysTime.getTime();
+            var angle = (utcTime % 86164090.5) / 239344.695833333;
+            return angle;
+        }
+    </script>
+</body>
+
+</html>
